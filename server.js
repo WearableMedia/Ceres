@@ -15,12 +15,17 @@ request(url,function(error, response, body){
     if(nearEarthObjects.length==0) {
          console.log(" neo is undefined ");
        } else{
-         console.log(nearEarthObjects[todayDate].length);
+         console.log("number of astroieds: "+nearEarthObjects[todayDate].length);
 
          for(var i = 0; i < nearEarthObjects[todayDate].length; i++){
            var obj = nearEarthObjects[todayDate][i];
-           console.log(obj.name);
-           console.log(obj.close_approach_data[0].miss_distance.miles);
+           console.log("name: "+obj.name);
+           console.log("miss_distance: "+obj.close_approach_data[0].miss_distance.miles +" miles");
+           console.log("estimated_diameter min: "+obj.estimated_diameter.miles.estimated_diameter_min+" miles");
+           console.log("estimated_diameter max: "+obj.estimated_diameter.miles.estimated_diameter_max+" miles");
+           console.log("is_potentially_hazardous_asteroid: "+obj.is_potentially_hazardous_asteroid);
+           console.log("relative_velocity: "+obj.close_approach_data[0].relative_velocity.miles_per_hour+"  miles_per_hour");
+           console.log("absolute_magnitude_h: "+obj.absolute_magnitude_h);
          }
        }
    }
