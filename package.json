@@ -1,0 +1,23 @@
+{
+  "name": "ghost-in-the-shell",
+  "version": "1.0.0",
+  "description": "This is an in-house project for the open call of ghost in the shell.",
+  "main": "server.js",
+  "scripts": {
+    "test": "node server.js",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WearableMedia/ghost-in-the-shell.git"
+  },
+  "author": "Jingwen Zhu",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/WearableMedia/ghost-in-the-shell/issues"
+  },
+  "homepage": "https://github.com/WearableMedia/ghost-in-the-shell#readme",
+  "dependencies": {
+    "request": "^2.79.0"
+  }
+}
