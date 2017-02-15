@@ -17,12 +17,12 @@ request(url, function(error, response, body) {
     var result = JSON.parse(body);
     var nearEarthObjects = result.near_earth_objects;
 
-    if (nearEarthObjects.length == 0) {
+    if (nearEarthObjects[todayDate].length == 0) {
       console.log(" neo is undefined ");
     } else {
       console.log("number of astroieds: " + nearEarthObjects[todayDate].length);
 
-      for (var i = 0; i < 10; i++) {
+      for (var i = 0; i < nearEarthObjects[todayDate].length; i++) {
         var obj = nearEarthObjects[todayDate][i];
         var b = parseFloat(obj.absolute_magnitude_h);
         brightness.push(b);
@@ -32,8 +32,8 @@ request(url, function(error, response, body) {
         diameter.push(d.toFixed(2));
       }
 
-      birghtness = mapArray(brightness,255,55);
-      //velocity = mapArray(velocity,1000,200);
+      birghtness = mapArray(brightness,65535,5000);
+      velocity = mapArray(velocity,150,40);
       console.log("brightness: " + brightness);
       console.log("velocity: " + velocity);
       console.log("diameter: " + diameter);

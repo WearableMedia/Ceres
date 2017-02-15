@@ -27,9 +27,9 @@
 
 Adafruit_TLC59711 tlc = Adafruit_TLC59711(NUM_TLC59711, clock, data);
 //Adafruit_TLC59711 tlc = Adafruit_TLC59711(NUM_TLC59711);
-
-uint16_t pwm = 6000;
-
+int num = 17;
+uint16_t pwm[] =  {47617, 42290, 43258, 35994, 10811, 8390, 5000, 6937, 11296, 28245, 34057, 42774, 65535, 17591, 22918, 7421, 23887};
+int velocity[] =  { 62, 40, 48, 64, 69, 96, 150, 137, 74, 78, 65, 54, 40, 83, 67, 137, 78};
 void setup() {
   Serial.begin(9600);
   Serial.println("TLC59711 test");
@@ -39,22 +39,26 @@ void setup() {
 
 void loop() {
 
-for(int j = 2; j < 8; j ++){
+  for (int j = 0; j < num; j ++) {
     for (uint8_t i = 0; i < NUM_CHANNELS * NUM_TLC59711; i++) {
-    tlc.setPWM(i, 0);
-    tlc.setPWM(i + 1, 1000);
-    tlc.setPWM(i + 2, 2000);
-    tlc.setPWM(i + 3, 5000);
-    if (i >= (NUM_CHANNELS - 1)) {
-      tlc.setPWM(0, pwm);
-    } else {
-      tlc.setPWM(i + 4, pwm);
+      tlc.setPWM(i, 0);
+      tlc.setPWM(i + 1,  int(pwm[j] / 5));
+      tlc.setPWM(i + 2,  int(pwm[j] / 4));
+      tlc.setPWM(i + 3,  int(pwm[j] / 3));
+      tlc.setPWM(i + 4,  int(pwm[j] / 2));
+      if (i >= (NUM_CHANNELS - 1)) {
+        //tlc.setPWM(0, pwm[j]/6);
+      } else {
+        tlc.setPWM(i + 5,  pwm[j]);
+      }
+      tlc.write();
+      delay(velocity[j]);
     }
+    tlc.setPWM(0, 0);
     tlc.write();
-    delay(20*j);
+    delay(600);
   }
-}
-
+  delay(1000);
 
 }
 
