@@ -1,3 +1,3 @@
-# project-roid
+# RO1D
 
-Project Roid is an interactive garment that takes NASA astroid data as input and visualize them with LEDs.
+RO1D is an interactive garment that takes NASA astroid data as input and visualize them with LEDs.
