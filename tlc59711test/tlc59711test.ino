@@ -15,18 +15,20 @@
   BSD license, all text above must be included in any redistribution
  ****************************************************/
 
-#include "Adafruit_TLC59711.h"
+#include "Adafruit_TLC5947.h"
 #include <SPI.h>
 
 // How many boards do you have chained?
-#define NUM_TLC59711 1
-#define NUM_CHANNELS 12
+#define NUM_TLC5974 1
+#define NUM_CHANNELS 24
 
 #define data   9
-#define clock  10
+#define clock   10
+#define latch   6
+#define oe  -1  // set to -1 to not use the enable pin (its optional)
 
-Adafruit_TLC59711 tlc = Adafruit_TLC59711(NUM_TLC59711, clock, data);
-//Adafruit_TLC59711 tlc = Adafruit_TLC59711(NUM_TLC59711);
+Adafruit_TLC5947 tlc = Adafruit_TLC5947(NUM_TLC5974, clock, data, latch);
+
 int num = 17;
 uint16_t pwm[] =  {47617, 42290, 43258, 35994, 10811, 8390, 5000, 6937, 11296, 28245, 34057, 42774, 65535, 17591, 22918, 7421, 23887};
 int velocity[] =  { 62, 40, 48, 64, 69, 96, 150, 137, 74, 78, 65, 54, 40, 83, 67, 137, 78};
@@ -40,16 +42,19 @@ void setup() {
 void loop() {
 
   for (int j = 0; j < num; j ++) {
-    for (uint8_t i = 0; i < NUM_CHANNELS * NUM_TLC59711; i++) {
+    for (uint8_t i = 0; i < NUM_CHANNELS * NUM_TLC5974; i++) {
       tlc.setPWM(i, 0);
       tlc.setPWM(i + 1,  int(pwm[j] / 5));
-      tlc.setPWM(i + 2,  int(pwm[j] / 4));
-      tlc.setPWM(i + 3,  int(pwm[j] / 3));
-      tlc.setPWM(i + 4,  int(pwm[j] / 2));
+      tlc.setPWM(i + 2,  int(pwm[j] / 5));
+      tlc.setPWM(i + 3,  int(pwm[j] / 5));
+      tlc.setPWM(i + 4,  int(pwm[j] / 5));
+      tlc.setPWM(i + 5,  int(pwm[j] / 4));
+      tlc.setPWM(i + 6,  int(pwm[j] / 3));
+      tlc.setPWM(i + 7,  int(pwm[j] / 2));
       if (i >= (NUM_CHANNELS - 1)) {
         //tlc.setPWM(0, pwm[j]/6);
       } else {
-        tlc.setPWM(i + 5,  pwm[j]);
+        tlc.setPWM(i + 8,  pwm[j]);
       }
       tlc.write();
       delay(velocity[j]);
