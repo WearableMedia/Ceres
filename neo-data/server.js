@@ -32,7 +32,7 @@ request(url, function(error, response, body) {
         diameter.push(d.toFixed(2));
       }
 
-      birghtness = mapArray(brightness,65535,5000);
+      birghtness = mapArray(brightness,55,255);
       velocity = mapArray(velocity,150,40);
       console.log("brightness: " + brightness);
       console.log("velocity: " + velocity);
