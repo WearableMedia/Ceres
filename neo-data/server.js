@@ -37,6 +37,9 @@ request(url, function(error, response, body) {
       console.log("brightness: " + brightness);
       console.log("velocity: " + velocity);
       console.log("diameter: " + diameter);
+      console.log("estimated_diameter"+ diameter*20);
+      
+
       /*
       for(var i = 0; i < nearEarthObjects[todayDate].length; i++){
         var obj = nearEarthObjects[todayDate][i];
