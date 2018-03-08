@@ -3,8 +3,8 @@
 #include <avr/power.h>
 #endif
 
-#define PIN 9
-#define NUMPIXELS 30
+#define PIN 0
+#define NUMPIXELS 50
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
 
 
@@ -25,7 +25,7 @@ void setup() {
 
 
   strip.begin();
-  strip.setBrightness(fullBri / 2);
+  strip.setBrightness(fullBri);
   strip.show(); // Initialize all pixels to 'off'
 }
 

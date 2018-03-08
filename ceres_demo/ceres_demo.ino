@@ -3,13 +3,19 @@
 #include <avr/power.h>
 #endif
 
-#define PIN 9
-#define NUMPIXELS 30
-Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
+#define PIN_R 0
+#define PIN_L 2
+#define NUMPIXELS 50
+Adafruit_NeoPixel stripL = Adafruit_NeoPixel(NUMPIXELS, PIN_L, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel stripR = Adafruit_NeoPixel(NUMPIXELS, PIN_L, NEO_GRB + NEO_KHZ800);
 
-#define vibPin 6
+#define vibLF 6
+#define vibLB 5
+#define vibRF 11
+#define vibRB 10
 
 int num = 17;
+
 uint16_t pwm[] =  {114, 132, 129, 153, 236, 244, 255, 249, 234, 178, 159, 130, 55, 213, 196, 247, 193};
 int velocity[] =  { 62, 40, 48, 64, 69, 96, 150, 137, 74, 78, 65, 54, 40, 83, 67, 137, 78};
 
@@ -19,8 +25,8 @@ uint32_t blueGradient[] = {0x0028C7, 0x0045CD, 0x0062D3, 0x007FD9, 0x009DE0, 0x0
 
 void setup() {
 
-  pinMode(vibPin, OUTPUT);
-  
+  //pinMode(vibPin, OUTPUT);
+
   // This is for Trinket 5V 16MHz, you can remove these three lines if you are not using a Trinket
 #if defined (__AVR_ATtiny85__)
   if (F_CPU == 16000000) clock_prescale_set(clock_div_1);
@@ -28,32 +34,42 @@ void setup() {
   // End of trinket special code
 
 
-  strip.begin();
-  strip.setBrightness(fullBri / 2);
-  strip.show(); // Initialize all pixels to 'off'
+  stripL.begin();
+  stripR.begin();
+  //stripL.setBrightness(fullBri / 2);
+  //stripR.setBrightness(fullBri / 2);
+  stripL.show(); // Initialize all pixels to 'off'
+  stripR.show(); // Initialize all pixels to 'off'
 }
 
 
 void loop() {
   for (int j = 0; j < num; j ++) {
     for (uint8_t i = 0; i < NUMPIXELS; i++) {
-      strip.setPixelColor(i, 0);
-      strip.setPixelColor(i + 1,  int(pwm[j] / 5), int(pwm[j] / 5), int(pwm[j] / 5));
-      strip.setPixelColor(i + 2,  int(pwm[j] / 4), int(pwm[j] / 4), int(pwm[j] / 4));
-      strip.setPixelColor(i + 3,  int(pwm[j] / 3), int(pwm[j] / 3), int(pwm[j] / 3));
-      strip.setPixelColor(i + 4,  int(pwm[j] / 2), int(pwm[j] / 2), int(pwm[j] / 2));
+      stripL.setPixelColor(i, 0);
+      stripR.setPixelColor(i, 0);
+      stripL.setPixelColor(i + 1,  int(pwm[j] / 5), int(pwm[j] / 5), int(pwm[j] / 5));
+      stripR.setPixelColor(i + 1,  int(pwm[j] / 5), int(pwm[j] / 5), int(pwm[j] / 5));
+      stripL.setPixelColor(i + 2,  int(pwm[j] / 4), int(pwm[j] / 4), int(pwm[j] / 4));
+      stripR.setPixelColor(i + 2,  int(pwm[j] / 4), int(pwm[j] / 4), int(pwm[j] / 4));
+      stripL.setPixelColor(i + 3,  int(pwm[j] / 3), int(pwm[j] / 3), int(pwm[j] / 3));
+      stripR.setPixelColor(i + 3,  int(pwm[j] / 3), int(pwm[j] / 3), int(pwm[j] / 3));
+      stripL.setPixelColor(i + 4,  int(pwm[j] / 2), int(pwm[j] / 2), int(pwm[j] / 2));
+      stripR.setPixelColor(i + 4,  int(pwm[j] / 2), int(pwm[j] / 2), int(pwm[j] / 2));
       if (i >= (NUMPIXELS - 1)) {
         //tlc.setPWM(0, pwm[j]/6);
       } else {
-        strip.setPixelColor(i + 5,  pwm[j], pwm[j], pwm[j]);
+        stripL.setPixelColor(i + 5,  pwm[j], pwm[j], pwm[j]);
+        stripR.setPixelColor(i + 5,  pwm[j], pwm[j], pwm[j]);
       }
-      strip.show();
-      analogWrite(vibPin, pwm[j]);
+      stripL.show();
+      stripR.show();
+      //analogWrite(vibPin, pwm[j]);
       delay(velocity[j]);
     }
     //      strip.setPixelColor(0, 0);
     //      strip.setPixelColor(0, 0);
-     analogWrite(vibPin, 0);
+    //analogWrite(vibPin, 0);
     delay(600);
   }
   delay(1000);
